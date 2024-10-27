@@ -3,35 +3,43 @@
     
     
     <form>
-        <h3>Alta:</h3>
+        <h3>Modificar:</h3>
+        N° ID Asignación:
+        <select v-model="ida" @change="cambiarDescripcionI">
+            <option v-for="opcion in BaseA" :key="opcion.id" :value="opcion.id" >
+                {{ opcion.id }}
+            </option>
+        </select>
+        <br>
         <br>
           N° ID Usuario:
         <select v-model="idu" @change="cambiarDescripcionU">
             <option v-for="opcion in BaseU" :key="opcion.id" :value="opcion.id" >
-                {{ opcion.id }}
+                {{ opcion.id}}
             </option>
         </select>
           Usuario:<input v-model="descripcionU" id="t1u">
-          <br>  
-          <br>  
+          <br>
+
+          <br>
           N° ID Tarea:
-        <select v-model="idt" @change="cambiarDescripcion">
+        <select v-model="idt" @change="cambiarDescripcionT">
             <option v-for="opcion in Base" :key="opcion.id" :value="opcion.id" >
                 {{ opcion.id + "-" + opcion.descripcion }}
             </option>
         </select>
           Tarea:<input v-model="descripcion" id="t1">
           <br>
-          <br>  
+          <br>
           Estado:
-          <select v-model="ide" @change="cambiarDescripcion">
+          <select v-model="ide" @change="cambiarDescripcionE">
             <option v-for="opcion in BaseE" :key="opcion.id" :value="opcion.id" >
                 {{ opcion.id + "-" + opcion.descripcion}}
             </option>
         </select>
         <br>
-        <br>  
-          <button @click="crear()">Crear</button>
+        <br>
+          <button @click="modificar()">Modificar</button>
           <button>Salir</button>
     
     </form>
@@ -57,17 +65,19 @@
 const idt = ref('');
 const idu = ref('');
 const ide = ref('');
-const estado = ref('');
+const ida = ref('');
+
 const Base = ref([]);
 const BaseU = ref([]);
 const BaseE = ref([]);
+const BaseA = ref([]);
 const descripcion = ref('');
 const descripcionU = ref('');
 const descripcionE = ref('');
 
-const crear = async () => {
+const modificar = async () => {
     const options = {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -78,7 +88,7 @@ const crear = async () => {
         })
     };
         
-    const response = await fetch('http://localhost:3000/asignar/', options);
+    const response = await fetch('http://localhost:3000/asignar/' + ida.value, options);
     if (response.ok) {
         alert('Tarea asignada');
     } else {
@@ -93,6 +103,8 @@ onMounted(async () => {
             'Content-Type': 'application/json'
         }
     };
+    const responseAsignacion = await fetch('http://localhost:3000/asignar', options);
+    BaseA.value = await responseAsignacion.json();
     const response = await fetch('http://localhost:3000/tareas', options);
     Base.value = await response.json();
     const responseUsuario = await fetch('http://localhost:3000/usuarios', options);
@@ -101,21 +113,65 @@ onMounted(async () => {
     BaseE.value = await responseEstado.json(); 
 });
     
-const cambiarDescripcion = () => {
+
+const cambiarDescripcionT = () => {
+    
     
     const selectedOption = Base.value.find(opcion => opcion.id === idt.value);
     
     if (selectedOption) {
         descripcion.value = selectedOption.descripcion;
+        
+    }
+
+}    
+    
+
+const cambiarDescripcionU = () => {
+  const selectedOptionU = BaseU.value.find(opcion => opcion.id === idu.value);
+    
+    if (selectedOptionU) {
+        descripcionU.value = selectedOptionU.nombre + " "+selectedOptionU.apellido;
+        
+    }
+
+}
+
+const cambiarDescripcionE = () => {
+
+    const selectedOptionE = BaseE.value.find(opcion => opcion.id === ide.value);
+         
+    if (selectedOptionE) {
+        descripcionE.value = selectedOptionE.id + "-"+selectedOptionE.descripcion;
+        
     }
 }
 
-const cambiarDescripcionU = () => {
+
+const cambiarDescripcionI = () => {
     
-    const selectedOption = BaseU.value.find(opcion => opcion.id === idu.value);
+    
+    const seleA = BaseA.value.find(opcion => opcion.id === ida.value);
+    
+    const selectedOption = Base.value.find(opcion => opcion.id === seleA.id_tarea);
     
     if (selectedOption) {
-        descripcionU.value = selectedOption.nombre + " "+selectedOption.apellido;
+        descripcion.value = selectedOption.descripcion;
+        idt.value = seleA.id_tarea;
+    }
+
+    const selectedOptionU = BaseU.value.find(opcion => opcion.id === seleA.id_usuario);
+    
+    if (selectedOptionU) {
+        descripcionU.value = selectedOptionU.nombre + " "+selectedOptionU.apellido;
+        idu.value = seleA.id_usuario;
+    }
+
+    const selectedOptionE = BaseE.value.find(opcion => opcion.id === seleA.id_estado);
+         
+    if (selectedOptionE) {
+        descripcionE.value = selectedOptionE.id + "-"+selectedOptionE.descripcion;
+        ide.value = seleA.id_estado;
     }
 }
     

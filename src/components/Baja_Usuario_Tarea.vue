@@ -12,16 +12,16 @@
             </option>
         </select>
           <br>
+          <br>  
           Usuario:<input v-model="descripcionU" id="t1u">
-          
-          Tarea:<input v-model="descripcion" id="t1">
-            
-          Estado:<select v-model="estado" name="estado" >
-            <option value="1">1-Pendiente</option>
-            <option value="2">2-En progreso</option>
-            <option value="3">3-Completada</option>
-          </select>
           <br>
+          <br>  
+          Tarea:<input v-model="descripcion" id="t1">
+          <br> 
+          <br>   
+          Estado:<input v-model="descripcionE" name="estado" >
+          <br>
+          <br>  
           <button @click="eliminar()">Eliminar</button>
           <button>Salir</button>
     
@@ -48,12 +48,14 @@
 const idt = ref('');
 const idu = ref('');
 const ida = ref('');
-const estado = ref('');
+//const ide = ref('');
 const Base = ref([]);
 const BaseU = ref([]);
 const BaseA = ref([]);
+const BaseE = ref([]);
 const descripcion = ref('');
 const descripcionU = ref('');
+const descripcionE = ref('');
 
 const eliminar = async () => {
     const options = {
@@ -88,6 +90,8 @@ onMounted(async () => {
     BaseU.value = await responseUsuario.json();
     const responseAsignacion = await fetch('http://localhost:3000/asignar', options);
     BaseA.value = await responseAsignacion.json();
+    const responseEstado = await fetch('http://localhost:3000/estados', options);
+    BaseE.value = await responseEstado.json();
 });
     
 const cambiarDescripcion = () => {
@@ -107,7 +111,13 @@ const cambiarDescripcion = () => {
         descripcionU.value = selectedOptionU.nombre + " "+selectedOptionU.apellido;
     }
 
-    estado.value = seleA.id_estado
+    const selectedOptionE = BaseE.value.find(opcion => opcion.id === seleA.id_estado);
+         
+    if (selectedOptionE) {
+        descripcionE.value = selectedOptionE.id + "-"+selectedOptionE.descripcion;
+    }
+
+    
 }
     
 

@@ -8,10 +8,11 @@
           N° ID:
         <select v-model="idt" @change="cambiarDescripcion">
             <option v-for="opcion in Base" :key="opcion.id" :value="opcion.id" >
-                {{ opcion.id }}
+                {{ opcion.id + "-" + opcion.descripcion }}
             </option>
         </select>
           Tarea:<input v-model="descripcion" id="t1">
+          <br>
           <br>
           <button @click="modificar()">Modificar</button>
           <button>Salir</button>

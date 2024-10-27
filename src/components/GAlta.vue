@@ -7,6 +7,7 @@
           <br>
           Ingrese Tarea:<input v-model="nueva" id="t1">
           <br>
+          <br>
           <button @click="cargar()">Crear</button>
           <button>Salir</button>
     
@@ -32,7 +33,7 @@
  
     const nueva = ref();
     const cargar = async  () => {
-       
+        
         const options = {
             method: 'POST',
             headers: {
@@ -52,4 +53,6 @@
             alert('Error al crear la tarea');
         }
     }
+
+    
 </script>
