@@ -21,7 +21,7 @@
     color: black;
     background-color: rgb(75, 82, 148);
     border-style: solid;
-    border-color: blue
+    border-color: black
    }
    h3{
     color: white;

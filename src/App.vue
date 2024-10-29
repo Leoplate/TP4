@@ -134,21 +134,56 @@
   }
 
   #div1{
-    width: 100%;
+    width: 30%;
     margin: 0px;
-    border-color: black;
+    border-color: lightblue;
+    border-style: solid;
+    background-color: white;
+  }
+
+  #div12{
+     border-style: solid;
+     border-color: white;
+     background-color: lightblue;
+   } 
+
+  #div2{
+    width: 30%;
+    margin: 0px;
+    border-color: lightblue;
+    border-style: solid;
+    background-color: white;
+  }
+
+  #div22{
+     border-style: solid;
+     border-color: white;
+     background-color: lightblue;
+   } 
+
+   #div4{
+    background-color: lightslategrey;
+    width: 100%;
+    margin: 0 auto;
+    border-color: lightblue;
     border-style: solid;
     background-color: lightblue;
   }
 
-  #div2{
-    background-color: lightslategrey;
-    width: 100%;
-    margin: 0 auto;
-    border-color: black;
+   #div41{
+     border-style: solid;
+     border-color: white;
+     background-color: lightblue;
+   }  
+  #div9{
+    font-size: 15px; 
+    text-align: center;  
     border-style: solid;
-    background-color: lightblue;
-  }
+    border-color: black;
+    background-color: white;
+  } 
+
+  
 
   #div3{
     width: 50%;
@@ -158,23 +193,9 @@
     background-color: lightslategrey;
   }
 
-  #div4{
-    background-color: lightslategrey;
-    width: 100%;
-    margin: 0 auto;
-    border-color: black;
-    border-style: solid;
-    background-color: lightblue;
-  }
+  
 
-  #div9{
-    font-size: 15px; 
-    text-align: center;  
-    border-style: solid;
-    border-color: black;
-    border-color: black;
-    background-color: white;
-  }
+  
   
   #titulo{
     color: white;
@@ -216,18 +237,22 @@
     <ul>
         
       <div id="div2">
-        <li>Tareas: </li> 
-         Alta:<input type="radio" name="opcion" @click="TareaGAlta()" >   
-         Baja:<input type="radio" name="opcion" @click="TareaGBaja()">
-         Modificar:<input type="radio" name="opcion" @click="TareaGModi()">
+        <div id="div22">
+          <li>Tareas: </li> 
+           Alta:<input type="radio" name="opcion" @click="TareaGAlta()" >   
+           Baja:<input type="radio" name="opcion" @click="TareaGBaja()">
+           Modificar:<input type="radio" name="opcion" @click="TareaGModi()">
+        </div>
       </div>
       <br>
       <div id="div1">
-        <li>Asignación de Tareas: </li> 
-         Alta:<input type="radio" name="opcion" @click="TareaAlta()" >   
-         Baja:<input type="radio" name="opcion" @click="TareaBaja()">
-         Modificar:<input type="radio" name="opcion" @click="TareaModi()">
-      </div>
+        <div id="div12">
+          <li>Asignación de Tareas: </li> 
+           Alta:<input type="radio" name="opcion" @click="TareaAlta()" >   
+           Baja:<input type="radio" name="opcion" @click="TareaBaja()">
+           Modificar:<input type="radio" name="opcion" @click="TareaModi()">
+        </div> 
+        </div>
       <br>
       
     </ul>
@@ -248,12 +273,14 @@
       <h2>Seguimiento:</h2>
       <ul>
         <div id="div4">
-          <li>Tipo de seleccion: </li> 
-           Todos:<input type="radio" name="opcion" @click="seleccionarTabla()" >   
-           Usuarios:<input type="radio" name="opcion" @click="seleccionarTablaUsuarios()">
-           Tareas:<input type="radio" name="opcion" @click="seleccionarTablaTareas()">
-           Estados:<input type="radio" name="opcion" @click="seleccionarTablaEstado()">
-         </div> 
+          <div id="div41">
+            <li>Tipo de seleccion: </li> 
+             Todos:<input type="radio" name="opcion" @click="seleccionarTabla()" >   
+             Usuarios:<input type="radio" name="opcion" @click="seleccionarTablaUsuarios()">
+             Tareas:<input type="radio" name="opcion" @click="seleccionarTablaTareas()">
+             Estados:<input type="radio" name="opcion" @click="seleccionarTablaEstado()">
+          </div>
+        </div> 
       </ul>
       
       <TablaSeleccionByUsers v-show="tuser"></TablaSeleccionByUsers>
